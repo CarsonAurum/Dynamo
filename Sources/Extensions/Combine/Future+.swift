@@ -15,8 +15,9 @@ extension Future {
     
     /// Construct a new future with an asynchronous closure payload.
     ///
-    /// - Parameter priority: An optionally specified priority that the given work will execute under.
-    /// - Parameter work: An asynchronous workload capable of producing an output.
+    /// - Parameters:
+    ///   - priority: An optionally specified priority that the given work will execute under.
+    ///   - work: An asynchronous workload capable of producing an output.
     /// - Returns: The newly constructed future, with no potential error once the workload is completed.
     public static func `async`(
         priority: TaskPriority? = nil,
@@ -31,8 +32,9 @@ extension Future {
     
     /// Construct a new future with an asynchronous throwing closure payload.
     ///
-    /// - Parameter priority: An optionally specified priority that the given work will execute under.
-    /// - Parameter work: An asynchronous throwing workload capable of producing an output.
+    /// - Parameters:
+    ///   - priority: An optionally specified priority that the given work will execute under.
+    ///   - work: An asynchronous throwing workload capable of producing an output.
     /// - Returns: The newly constructed future, with a potential error once the workload is completed.
     public static func `async`(
         priority: TaskPriority? = nil,
