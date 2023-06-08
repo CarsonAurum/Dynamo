@@ -50,10 +50,18 @@ extension Future {
         }
     }
     
+    /// Construct a new future to return the given result.
+    ///
+    /// - Parameter value: The value to wrap within the newly constructed future.
+    /// - Returns: The newly constructed future.
     public static func just(_ value: Result<Output, Failure>) -> Self {
         Self { $0(value) }
     }
     
+    /// Attach a new result-based completion handler to this future.
+    ///
+    /// - Parameter receiveCompletion: The completion to execute once the future is fulfilled.
+    /// - Returns: The type-erased cancellable object containing the newly attached handler.
     public func sinkResult(
         _ receiveCompletion: @escaping (Result<Output, Failure>) -> Void
     ) -> AnyCancellable {
@@ -68,9 +76,21 @@ extension Future {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension Future where Output == Void {
+    /// Perform a new action once this future is fulfilled.
+    ///
+    /// - Parameter action: The action to perform when this future is fulfilled.
+    /// - Returns: The future containing the newly attached handler.
     public static func perform(_ action: @escaping () -> Void) -> Self {
         Self { $0(.success(action())) }
     }
+    
+    /// Perform a new action once this future if fulfilled within the context of the given scheduler.
+    ///
+    /// - Parameters:
+    ///   - scheduler: The scheduler to use when executing the given action.
+    ///   - options: The scheduler options to use when executing the given action.
+    ///   - action: The action to perform when this future is fulfilled.
+    /// - Returns: The future containing the newly attached handler.
     public static func perform<S: Scheduler>(
         on scheduler: S,
         options: S.SchedulerOptions? = nil,
@@ -130,6 +150,10 @@ extension Future where Output == Void, Failure == Error {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension Future where Failure == Error {
+    
+    /// Construct a new future capable of handling a throwing closure.
+    ///
+    /// - Parameter attemptToFulfill: The throwing closure to execute when fulfilling this promise.
     @_disfavoredOverload
     public convenience init(_ attemptToFulfill: @escaping (Promise) throws -> Void) {
         self.init {
