@@ -9,6 +9,78 @@
 #if canImport(Dispatch)
 import Dispatch
 
+#if canImport(Foundation)
+import Foundation
+#endif
+
+extension DispatchQueue {
+    #if canImport(Foundation)
+    public convenience init(
+        qos: DispatchQoS = .unspecified,
+        attributes: DispatchQueue.Attributes = [],
+        autoreleaseFrequency: DispatchQueue.AutoreleaseFrequency = .inherit,
+        target: DispatchQueue? = nil
+    ) {
+        self.init(
+            label: UUID().uuidString,
+            qos: qos,
+            attributes: attributes,
+            autoreleaseFrequency: autoreleaseFrequency,
+            target: target
+        )
+    }
+    #endif
+    
+    @_disfavoredOverload
+    public convenience init(
+        qosClass: DispatchQoS.QoSClass = .unspecified,
+        attributes: DispatchQueue.Attributes = [],
+        autoreleaseFrequency: DispatchQueue.AutoreleaseFrequency = .inherit,
+        target: DispatchQueue? = nil
+    ) {
+        self.init(
+            qos: .init(qosClass: qosClass, relativePriority: 0),
+            attributes: attributes, autoreleaseFrequency: autoreleaseFrequency,
+            target: target
+        )
+    }
+    
+    public convenience init<T>(
+        label: T.Type,
+        qos: DispatchQoS = .unspecified,
+        attributes: DispatchQueue.Attributes = [],
+        autoreleaseFrequency: DispatchQueue.AutoreleaseFrequency = .inherit,
+        target: DispatchQueue? = nil
+    ) {
+        let labelPrefix = Bundle.current?.bundleIdentifier ?? "us.carsonrau.Dynamo"
+        let label = labelPrefix + "." + String(describing: label)
+        self.init(
+            label: label,
+            qos: qos,
+            attributes: attributes,
+            autoreleaseFrequency: autoreleaseFrequency,
+            target: target
+        )
+    }
+    
+    @_disfavoredOverload
+    public convenience init<T>(
+        label: T.Type,
+        qosClass: DispatchQoS.QoSClass = .unspecified,
+        attributes: DispatchQueue.Attributes = [],
+        autoreleaseFrequency: DispatchQueue.AutoreleaseFrequency = .inherit,
+        target: DispatchQueue? = nil
+    ) {
+        self.init(
+            label: label,
+            qos: .init(qosClass: qosClass, relativePriority: 0),
+            attributes: attributes, autoreleaseFrequency: autoreleaseFrequency,
+            target: target
+        )
+    }
+    
+}
+
 extension DispatchQueue {
     
     /// A boolean value determining whether the current queue is the main queue.
@@ -22,6 +94,10 @@ extension DispatchQueue {
         }
         return Self.getSpecific(key: Static.key) != nil
     }
+}
+
+
+extension DispatchQueue {
     
     /// Returns a boolean value indicating whether the current dispatch queue is the specified queue.
     ///
@@ -95,6 +171,17 @@ extension DispatchQueue {
             queue.asyncAfter(deadline: lastFireTime + dispatchDelay, execute: workItem!)
         }
     }
+    
+    public func concurrentPerform(iterations: Int, execute work: @escaping (Int) -> Void) {
+        self.sync { DispatchQueue.concurrentPerform(iterations: iterations, execute: work) }
+    }
+}
 
+extension DispatchQueue {
+    
+    public subscript<T>(_ key: DispatchSpecificKey<T>) -> T? {
+        get { self.getSpecific(key: key) }
+        set { self.setSpecific(key: key, value: newValue) }
+    }
 }
 #endif
