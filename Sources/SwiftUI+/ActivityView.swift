@@ -16,6 +16,8 @@ public struct ActivityView: View {
     public enum IndicatorType {
         case arcs(count: Int = 3, lineWidth: CGFloat = 2)
         case `default`(count: Int = 8)
+        case equalizer(count: Int = 5)
+        case flickeringDots(count: Int = 8)
     }
     
     @Binding private var isVisible: Bool
@@ -38,6 +40,11 @@ public struct ActivityView: View {
                 ArcsIndicator(count: count, lineWidth: lineWidth)
             case .default(let count):
                 DefaultIndicator(count: count)
+            case .equalizer(let count):
+                EqualizerIndicator(count: count)
+            case .flickeringDots(let count):
+                FlickeringDotsIndicator(count: count)
+                
             }
         }
     }
@@ -136,4 +143,55 @@ extension ActivityView {
         }
     }
 }
+
+// MARK: - EqualizerIndicator
+
+@available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
+extension ActivityView {
+    struct EqualizerIndicator: View {
+        let count: Int
+        var body: some View {
+            GeometryReader { geo in
+                ForEach(0..<count, id: \.self) { idx in
+                    ItemView(index: idx, count: count, size: geo.size)
+                }
+                .frame(width: geo.size.width, height: geo.size.height)
+            }
+        }
+        
+        struct ItemView: View {
+            let index: Int
+            let count: Int
+            let size: CGSize
+            @State private var scale: CGFloat = 0
+            var body: some View {
+                let itemSize = size.width / .init(count) / 2
+                let animation = Animation.easeOut.delay(0.2)
+                    .repeatForever(autoreverses: true)
+                    .delay(.init(index) / .init(count) / 2)
+                return RoundedRectangle(cornerRadius: 3)
+                    .frame(width: itemSize, height: size.height)
+                    .scaleEffect(x: 1, y: scale, anchor: .center)
+                    .onAppear {
+                        scale = 1
+                        withAnimation(animation) { scale = 0.4 }
+                    }
+                    .offset(x: 2 * itemSize * .init(index) - size.width / 2 + itemSize / 2)
+            }
+        }
+    }
+}
+
+// MARK: - FlickeringDotsIndicator
+
+@available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
+extension ActivityView {
+    struct FlickeringDotsIndicator: View {
+        let count: Int
+        var body: some View {
+            EmptyView()
+        }
+    }
+}
+
 #endif
