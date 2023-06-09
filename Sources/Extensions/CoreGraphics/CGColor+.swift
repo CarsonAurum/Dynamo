@@ -18,6 +18,7 @@ import AppKit
 #endif
 
 extension CGColor {
+    
     #if canImport(UIKit)
     /// Convert this color into a `UIColor` type.
     public var uiColor: UIColor? { .init(cgColor: self) }

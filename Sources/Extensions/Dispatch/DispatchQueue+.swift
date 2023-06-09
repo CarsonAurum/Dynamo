@@ -53,13 +53,33 @@ extension DispatchQueue {
     }
     
     /// Adds debouncing behavior.
+    ///
     /// Groups multiple consecutive calls to the same operation together, only executing after the delay condition has been satisfied.
+    ///
+    /// # Example
+    ///   Here's how you might use `debounce` to ensure that a search operation isn't performed until 1 second after the user has stopped typing:
+    ///
+    ///   ```swift
+    ///   let debouncedSearch = debounce(delay: 1.0, action: performSearch)
+    ///   searchField.onTextChanged = { searchText in
+    ///       debouncedSearch()
+    ///   }
+    ///   ```
+    ///  In this example, performSearch is a function that performs the actual search operation, and debouncedSearch is a debounced version
+    ///  of this function that's created by debounce.
+    ///
+    /// The onTextChanged event is assumed to be an event that's fired every time the text changes in a hypothetical searchField.
+    /// By assigning debouncedSearch to this event, we ensure that the search operation isn't performed more often than once per
+    /// second, no matter how often the text changes.
     ///
     /// - Parameters:
     ///   - delay: The number of seconds to stall before executing the given work item.
     ///   - queue: The queue on which the work item will be executed.
     ///   - action: The closure to execute.
     /// - Returns: A function debouncing the given work item until the delay condition has been satisfied.
+    /// - Important: The closure provided to this function should be a lightweight operation as it will only be executed once after the delay period.
+    /// If multiple invocations occur within the delay duration, only the last invocation will be executed.
+    /// - Note: The closure is executed asynchronously after the specified delay on the provided DispatchQueue.
     public func debounce(
         delay: Double,
         queue: DispatchQueue = .main,

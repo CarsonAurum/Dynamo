@@ -78,6 +78,7 @@ extension Future {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension Future where Output == Void {
+    
     /// Perform a new action once this future is fulfilled.
     ///
     /// - Parameter action: The action to perform when this future is fulfilled.
@@ -86,7 +87,7 @@ extension Future where Output == Void {
         Self { $0(.success(action())) }
     }
     
-    /// Perform a new action once this future if fulfilled within the context of the given scheduler.
+    /// Perform a new action once this future is fulfilled within the context of the given scheduler.
     ///
     /// - Parameters:
     ///   - scheduler: The scheduler to use when executing the given action.
@@ -106,9 +107,41 @@ extension Future where Output == Void {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension Future where Output == Void, Failure == Never {
+    
+    /// Creates a new `Future` that completes with a success after executing the provided closure.
+    ///
+    /// This method can be useful when you need to wrap synchronous, non-failing work into a `Future`.
+    ///
+    /// Usage:
+    ///
+    ///     let future = Future<Void, Never>.Error {
+    ///         print("This runs immediately!")
+    ///     }
+    ///
+    /// - Parameter action: A closure that performs work without any input.
+    /// - Returns: A `Future` that represents the completion of the work.
+    
     public static func Error(_ action: @escaping () -> Void) -> Self {
         Self { $0(.success(action())) }
     }
+    
+    /// Schedules the execution of a closure on a specified `Scheduler`, and returns a new `Future` that completes
+    /// with a success after the closure has been executed.
+    ///
+    /// This method can be useful when you need to perform non-failing work on a specific queue or in a specific context.
+    ///
+    /// Usage:
+    ///
+    ///     let future = Future<Void, Never>.perform(on: DispatchQueue.main) {
+    ///         print("This runs on the main queue!")
+    ///     }
+    ///
+    /// - Parameters:
+    ///   - scheduler: The scheduler on which to perform the work.
+    ///   - options: Scheduler options to customize the execution of the closure. Defaults to `nil`.
+    ///   - action: A closure that performs work without any input.
+    /// - Returns: A `Future` that represents the completion of the work.
+    
     public static func perform<S: Scheduler>(
         on scheduler: S,
         options: S.SchedulerOptions? = nil,
@@ -122,9 +155,39 @@ extension Future where Output == Void, Failure == Never {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension Future where Output == Void, Failure == Error {
+    
+    /// Creates a new `Future` that completes with a success after executing the provided closure.
+    ///
+    /// This method can be useful when you need to wrap synchronous, non-throwing work into a `Future`.
+    ///
+    /// Usage:
+    ///
+    ///     let future = Future<Void, Error>.perform {
+    ///         print("This runs immediately!")
+    ///     }
+    ///
+    /// - Parameter action: A closure that performs work without any input.
+    /// - Returns: A `Future` that represents the completion of the work.
+    
     public static func perform(_ action: @escaping () -> Void) -> Self {
         Self { $0(.success(action())) }
     }
+    
+    /// Creates a new `Future` that completes with a success after executing the provided closure, or fails if the closure throws an error.
+    ///
+    /// This method can be useful when you need to wrap synchronous, potentially throwing work into a `Future`.
+    ///
+    /// Usage:
+    ///
+    ///     let future = Future<Void, Error>.perform {
+    ///         if someCondition {
+    ///             throw SomeError()
+    ///         }
+    ///     }
+    ///
+    /// - Parameter action: A closure that performs work without any input and can throw an error.
+    /// - Returns: A `Future` that represents the completion of the work, or the error thrown.
+    
     public static func perform(_ action: @escaping () throws -> Void) -> Self {
         Self {
             do {
@@ -134,6 +197,23 @@ extension Future where Output == Void, Failure == Error {
             }
         }
     }
+    
+    /// Schedules the execution of a potentially throwing closure on a specified `Scheduler`, and returns a new `Future` that completes with a success after the closure has been executed, or fails if the closure throws an error.
+    ///
+    /// This method can be useful when you need to perform potentially throwing work on a specific queue or in a specific context.
+    ///
+    /// Usage:
+    ///
+    ///     let future = Future<Void, Error>.perform(on: DispatchQueue.main) {
+    ///         if someCondition {
+    ///             throw SomeError()
+    ///         }
+    ///     }
+    ///
+    /// - Parameters:
+    ///   - scheduler: The scheduler on which to perform the work.
+    ///   - action: A closure that performs work without any input and can throw an error.
+    /// - Returns: A `Future` that represents the completion of the work, or the error thrown.
     public static func perform<S: Scheduler>(
         on scheduler: S,
         _ action: @escaping () throws -> Void

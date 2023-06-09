@@ -8,10 +8,36 @@
 
 #if canImport(_Concurrency)
 
-/// Add support for closures that produce a value to the unsafe continuation API.
+/// Runs an asynchronous operation by calling a closure that takes an `UnsafeContinuation<U, Never>` and returns a `T` value.
+/// This can be used to wrap non-async APIs into async ones, allowing them to be used with Swift's async/await syntax.
 ///
-/// - Parameter f: A closure that takes an `UnsafeContinuation` parameter and returns some value of a new type.
-/// - Returns: A tuple containing the value of the continuation before and after the execution of the given closure.
+/// The closure `f` you provide to this function should take an `UnsafeContinuation` as a parameter and return a `T`.
+/// The continuation is then resumed asynchronously, and the result of `f` and the resumed value are returned as a tuple `(T, U)`.
+///
+/// The continuation will not throw any errors (`Never` type is used for the error argument in `UnsafeContinuation`).
+///
+/// - Parameters:
+///   - f: A closure that accepts `UnsafeContinuation<U, Never>` as its parameter and returns a `T`.
+/// - Returns: A tuple `(T, U)`, where `T` is the result of calling `f` and `U` is the result of the continuation's resume.
+/// - Note: Since this method works with an `UnsafeContinuation`, you need to ensure that the continuation is always resumed exactly once.
+///
+/// # Example
+/// ```swift
+/// let (result0, result1) = await withUnsafeContinuation { continuation in
+///     DispatchQueue.global().async {
+///         // Perform some long running operation
+///         let result = longRunningOperation()
+///         // Resume the continuation with the result of the operation
+///         continuation.resume(returning: result)
+///         return "Finished long running operation"
+///     }
+/// }
+/// print(result0) // "Finished long running operation"
+/// print(result1) // result of longRunningOperation
+/// ```
+///
+/// - Warning: This is an unsafe operation. If you forget to resume the continuation, or if you attempt to resume it more than once,
+/// your program may crash or exhibit undefined behavior.
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 public func withUnsafeContinuation<T, U>(
     _ f: (UnsafeContinuation<U, Never>) -> T
@@ -21,11 +47,46 @@ public func withUnsafeContinuation<T, U>(
     return (result0, result1)
 }
 
-/// Add support for throwing closures that produce a value to the unsafe continuation API.
+/// This function runs an asynchronous operation by calling a closure that takes an `UnsafeContinuation<U, Error>` and may throw an `Error`.
+/// This can be used to wrap non-async APIs into async ones, allowing them to be used with Swift's async/await syntax.
 ///
-/// - Parameter f: A throwing closure that takes an `UnsafeContinuation` parameter and returns some value of a new type.
-/// - Returns: A tuple containing the value of the continuation before and after the execution of the given closure.
-/// - Throws: Any error occuring within the continuation closure.
+/// The closure `fn` you provide to this function should take an `UnsafeContinuation` as a parameter and return a `T`, potentially throwing an error.
+/// The continuation is then resumed asynchronously, and the result of `fn` and the resumed value are returned as a tuple `(T, U)`.
+/// If `fn` throws an error, it is caught and wrapped in a `Result` type.
+///
+/// - Parameters:
+///   - fn: A closure that accepts `UnsafeContinuation<U, Error>` as its parameter and may throw an `Error`, returning a `T`.
+/// - Returns: A tuple `(T, U)`, where `T` is the result of calling `fn` and `U` is the result of the continuation's resume.
+/// - Throws: An error if `fn` throws, or if the `Result` wrapping `fn`'s return value is a failure.
+/// - Note: Since this method works with an `UnsafeContinuation`, you need to ensure that the continuation is always resumed exactly once.
+///
+/// # Example
+/// ```swift
+/// do {
+///     let (result0, result1) = try await withUnsafeThrowingContinuation { continuation in
+///         DispatchQueue.global().async {
+///             do {
+///                 // Perform some long running operation that might throw
+///                 let result = try longRunningOperation()
+///                 // Resume the continuation with the result of the operation
+///                 continuation.resume(returning: result)
+///                 return "Finished long running operation"
+///             } catch {
+///                 // If an error occurs, resume the continuation with that error
+///                 continuation.resume(throwing: error)
+///             }
+///         }
+///     }
+///     print(result0) // "Finished long running operation"
+///     print(result1) // result of longRunningOperation
+/// } catch {
+///     print("An error occurred: \(error)")
+/// }
+/// ```
+///
+/// - Warning: This is an unsafe operation. If you forget to resume the continuation, or if you attempt to resume it more than once,
+/// your program may crash or exhibit undefined behavior.
+
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 public func withUnsafeThrowingContinuation<T, U>(
     _ fn: (UnsafeContinuation<U, Error>) throws -> T

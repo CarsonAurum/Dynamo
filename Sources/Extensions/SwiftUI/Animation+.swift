@@ -14,11 +14,15 @@ extension Animation {
     
     /// Construct a new animation with the given friction and tension.
     ///
+    /// The function makes use of a physics-based spring model to provide a realistic feeling motion.
+    /// 
     /// - Parameters:
-    ///   - mass: The mass to associate with the body within this animation.
-    ///   - friction: The friction to associate with this spring animation.
-    ///   - tension: The tension to associate with this spring animation.
-    ///   - initialVelocity: The initial velocity to assign to this animation.
+    ///   - mass: The mass of the object being animated. Default value is 1.0.
+    ///   - friction: The frictional force, or resistance, in the animation.
+    ///   - tension: The tension force in the spring animation.
+    ///   - initialVelocity: The initial velocity of the object being animated. Default value is 0.
+    ///
+    ///  - Returns: An `Animation` object configured with a spring response using the specified properties.
     public static func interpolatingSpring(
         mass: Double = 1.0,
         friction: Double,
