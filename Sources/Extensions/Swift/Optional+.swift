@@ -9,13 +9,15 @@
 public enum _OptionalError: Error { case unwrap }
 
 extension Optional {
+    
     @inlinable
-    func unwrap() throws -> Wrapped {
+    public func unwrap() throws -> Wrapped {
         guard let wrapped = self else { throw _OptionalError.unwrap }
         return wrapped
     }
+    
     @inlinable
-    func unwrapOrThrow(_ error: @autoclosure () throws -> Error) throws -> Wrapped {
+    public func unwrapOrThrow(_ error: @autoclosure () throws -> Error) throws -> Wrapped {
         if let wrapped = self {
             return wrapped
         } else {

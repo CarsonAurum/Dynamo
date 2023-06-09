@@ -12,6 +12,8 @@ import SwiftUI
 /// A spacer that is automatically aligned in both the vertical and horizontal directions.
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 public struct XSpacer: View {
+    
+    /// Trivial initializer.
     @inlinable
     public init() { }
     @inlinable
@@ -28,6 +30,8 @@ public struct XSpacer: View {
 /// A spacer that is automatically aligned in the horizontal direction.
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 public struct HSpacer: View {
+    
+    /// Trivial initializer.
     @inlinable
     public init() { }
     @inlinable
@@ -39,6 +43,8 @@ public struct HSpacer: View {
 /// A spacer that is automatically aligned in the vertical direction.
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 public struct VSpacer: View {
+    
+    /// Trivial initializer.
     @inlinable
     public init() { }
     @inlinable

@@ -1,7 +1,7 @@
 //
 //  Cancellable+.swift
 //
-//  Extensions to the SwiftUI Cancellable type.
+//  Extensions to the Combine Cancellable type.
 //
 //  Carson Rau - 6/8/23
 //

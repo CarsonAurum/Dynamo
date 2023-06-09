@@ -11,6 +11,7 @@ import SwiftUI
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension Text {
+    
     @inlinable
     public func font(_ font: Font, weight: Font.Weight?) -> Self {
         if let weight {

@@ -12,6 +12,7 @@ import SwiftUI
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension View {
+    
     @inlinable
     @ViewBuilder
     public func font(_ font: Font, weight: Font.Weight?) -> some View {
@@ -27,6 +28,7 @@ extension View {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension View {
+    
     @inlinable
     public func then(_ body: (inout Self) -> Void) -> Self {
         var result = self
@@ -39,6 +41,7 @@ extension View {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension View {
+    
     @inlinable
     public func eraseToAnyView() -> AnyView { .init(self) }
 }
@@ -47,6 +50,7 @@ extension View {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension View {
+    
     @_disfavoredOverload
     @inlinable
     public func background<Background: View>(
@@ -88,6 +92,7 @@ extension View {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension View {
+    
     @_disfavoredOverload
     @inlinable
     public func overlay<Overlay: View>(
@@ -102,6 +107,7 @@ extension View {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension View {
+    
     @_disfavoredOverload
     @inlinable
     public func hidden(_ isHidden: Bool) -> some View {
