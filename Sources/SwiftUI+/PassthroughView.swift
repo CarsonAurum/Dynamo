@@ -1,10 +1,12 @@
 //
 //  PassthroughView.swift
-//  
 //
-//  Created by Carson Rau on 6/8/23.
+//  A wrapper view allowing seamless passthrough of its containing view.
+//
+//  Carson Rau - 6/8/23
 //
 
+#if canImport(SwiftUI)
 import SwiftUI
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
@@ -27,3 +29,4 @@ public struct PassthroughView<Content: View>: View {
         content
     }
 }
+#endif

@@ -1,8 +1,9 @@
 //
 //  EnvironmentValues+.swift
-//  
 //
-//  Created by Carson Rau on 6/8/23.
+//  Extensions to the functionality of the SwiftUI EnvironmentValues capability.
+//
+//  Carson Rau - 6/8/23
 //
 
 #if canImport(SwiftUI)

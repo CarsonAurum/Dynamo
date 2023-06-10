@@ -1,8 +1,9 @@
 //
 //  Bundle+.swift
 //
+//  Extensions to the Foundation Bundle type.
 //
-//  Created by Carson Rau on 6/9/23.
+//  Carson Rau - 6/9/23
 //
 
 #if canImport(Foundation) && canImport(Darwin)

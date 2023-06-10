@@ -1,6 +1,7 @@
 //
 //  DispatchQoS.QoSClass+.swift
 //
+//  Extensions to the Dispatch DispatchQoS.QoSClass type.
 //
 //  Created by Carson Rau on 6/9/23.
 //
@@ -35,5 +36,22 @@ extension DispatchQoS.QoSClass {
         }
     }
     #endif
+}
+
+extension DispatchQoS.QoSClass: CaseIterable {
+    public static var allCases: [DispatchQoS.QoSClass] = [
+        .userInteractive,
+        .userInitiated,
+        .default,
+        .utility,
+        .background,
+        .unspecified
+    ]
+}
+
+extension DispatchQoS.QoSClass: Comparable {
+    public static func <(lhs: Self, rhs: Self) -> Bool {
+        lhs.rawValue.rawValue < rhs.rawValue.rawValue
+    }
 }
 #endif

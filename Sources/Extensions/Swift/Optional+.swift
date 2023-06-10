@@ -3,7 +3,7 @@
 //
 //  Extensions to the Swift Optional type.
 //
-//  Created by Carson Rau on 6/8/23.
+//  Carson Rau - 1/31/22
 //
 
 public enum _OptionalError: Error { case unwrap }

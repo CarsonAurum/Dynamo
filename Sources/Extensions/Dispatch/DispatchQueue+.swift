@@ -178,7 +178,6 @@ extension DispatchQueue {
 }
 
 extension DispatchQueue {
-    
     public subscript<T>(_ key: DispatchSpecificKey<T>) -> T? {
         get { self.getSpecific(key: key) }
         set { self.setSpecific(key: key, value: newValue) }

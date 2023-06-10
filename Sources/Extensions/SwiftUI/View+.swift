@@ -1,8 +1,9 @@
 //
 //  View+.swift
 //
+//  Extensions to the SwiftUI View type.
 //
-//  Created by Carson Rau on 6/8/23.
+//  Carson Rau - 6/8/23
 //
 
 #if canImport(SwiftUI)
