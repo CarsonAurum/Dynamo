@@ -12,11 +12,10 @@ import Foundation
 
 public enum _CastError: Error { case invalidCast }
 
-
 @inlinable
 public func _cast<T, U>(_ value: T, to type: U.Type) -> U? {
-    if let result = value as? U { return result }
-    else { return nil }
+    guard let result = value as? U else { return nil }
+    return result
 }
 
 /// A strong cast from one type to another.
@@ -28,8 +27,8 @@ public func _cast<T, U>(_ value: T, to type: U.Type) -> U? {
 /// - Throws: A `Swift.Error` subtype  if the cast fails.
 @inlinable
 public func cast<T, U>(_ value: T, to type: U.Type = U.self) throws -> U {
-    if let res = _cast(value, to: type) { return res }
-    else { throw _CastError.invalidCast }
+    guard let res = _cast(value, to: type) else { throw _CastError.invalidCast }
+    return res
 }
 
 /// A strong cast from one type to another, with a default fallback value.
@@ -41,8 +40,8 @@ public func cast<T, U>(_ value: T, to type: U.Type = U.self) throws -> U {
 /// - Returns: The value after the cast, or the `default` value if the cast fails.
 @inlinable
 public func cast<T, U>(_ value: T, to type: U.Type = U.self, `default`: U) -> U {
-    if let res = _cast(value, to: type) { return res }
-    else { return `default` }
+    guard let res = _cast(value, to: type) else { return `default` }
+    return res
 }
 
 /// Optional cast from one type to another.

@@ -10,7 +10,7 @@
 import Dispatch
 
 extension DispatchQoS: Comparable {
-    public static func <(lhs: Self, rhs: Self) -> Bool {
+    public static func < (lhs: Self, rhs: Self) -> Bool {
         lhs.qosClass < rhs.qosClass
     }
 }

@@ -13,7 +13,6 @@ import SwiftUI
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension View {
-    
     @inlinable
     @ViewBuilder
     public func font(_ font: Font, weight: Font.Weight?) -> some View {
@@ -29,7 +28,6 @@ extension View {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension View {
-    
     @inlinable
     public func then(_ body: (inout Self) -> Void) -> Self {
         var result = self
@@ -38,11 +36,10 @@ extension View {
     }
 }
 
-// MARK:  View+Erase
+// MARK: View+Erase
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension View {
-    
     @inlinable
     public func eraseToAnyView() -> AnyView { .init(self) }
 }
@@ -51,7 +48,6 @@ extension View {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension View {
-    
     @_disfavoredOverload
     @inlinable
     public func background<Background: View>(
@@ -60,18 +56,15 @@ extension View {
     ) -> some View {
         self.background(background(), alignment: alignment)
     }
-    
     @_disfavoredOverload
     @inlinable
     public func background(_ color: Color) -> some View {
         self.background(PassthroughView(content: { color }))
     }
-    
     @inlinable
     public func backgroundFill(_ color: Color) -> some View {
         self.background(color.edgesIgnoringSafeArea(.all))
     }
-    
     @inlinable
     public func backgroundFill<BackgroundFill: View>(
         _ fill: BackgroundFill,
@@ -79,7 +72,6 @@ extension View {
     ) -> some View {
         self.background(fill.edgesIgnoringSafeArea(.all), alignment: alignment)
     }
-    
     @inlinable
     public func backgroundFill<BackgroundFill: View>(
         alignment: Alignment = .center,
@@ -93,7 +85,6 @@ extension View {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension View {
-    
     @_disfavoredOverload
     @inlinable
     public func overlay<Overlay: View>(
@@ -108,7 +99,6 @@ extension View {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension View {
-    
     @_disfavoredOverload
     @inlinable
     public func hidden(_ isHidden: Bool) -> some View {
@@ -123,22 +113,18 @@ extension View {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension View {
-    
     @inlinable
     public func inset(_ point: CGPoint) -> some View {
         self.offset(x: -point.x, y: -point.y)
     }
-    
     @inlinable
     public func inset(_ length: CGFloat) -> some View {
         self.offset(x: -length, y: -length)
     }
-    
     @inlinable
     public func offset(_ point: CGPoint) -> some View {
         self.offset(x: point.x, y: point.y)
     }
-    
     @inlinable
     public func offset(_ length: CGFloat) -> some View {
         self.offset(x: length, y: length)
@@ -149,11 +135,9 @@ extension View {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension View {
-    
     public func transition(_ makeTransition: () -> AnyTransition) -> some View {
         self.transition(makeTransition())
     }
-    
     public func asymmetricTransition(
         insertion: AnyTransition = .identity,
         removal: AnyTransition = .identity
@@ -166,13 +150,11 @@ extension View {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension View {
-    
-    public func alignmentGuide(_ g: HorizontalAlignment) -> some View {
-        self.alignmentGuide(g) { $0[g] }
+    public func alignmentGuide(_ guide: HorizontalAlignment) -> some View {
+        self.alignmentGuide(guide) { $0[guide] }
     }
-    
-    public func alignmentGuide(_ g: VerticalAlignment) -> some View {
-        self.alignmentGuide(g) { $0[g] }
+    public func alignmentGuide(_ guide: VerticalAlignment) -> some View {
+        self.alignmentGuide(guide) { $0[guide] }
     }
 }
 
@@ -180,32 +162,26 @@ extension View {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension View {
-    
     @inlinable
     public func width(_ width: CGFloat?) -> some View {
         self.frame(width: width)
     }
-    
     @inlinable
     public func height(_ height: CGFloat?) -> some View {
         self.frame(height: height)
     }
-    
     @inlinable
     public func minWidth(_ width: CGFloat?) -> some View {
         self.frame(minWidth: width)
     }
-    
     @inlinable
     public func maxWidth(_ width: CGFloat?) -> some View {
         self.frame(maxWidth: width)
     }
-    
     @inlinable
     public func minHeight(_ height: CGFloat?) -> some View {
         self.frame(minHeight: height)
     }
-    
     @inlinable
     public func maxHeight(_ height: CGFloat?) -> some View {
         self.frame(maxHeight: height)
@@ -216,14 +192,12 @@ extension View {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension View {
-    
     @ViewBuilder
     public func modify<T: View>(
         @ViewBuilder transform: (Self) -> T
     ) -> some View {
         transform(self)
     }
-    
     @ViewBuilder
     public func modify<T: View>(
         if predicate: Bool,
@@ -232,7 +206,6 @@ extension View {
         if predicate { transform(self) }
         else { self }
     }
-    
     @ViewBuilder
     public func modify<T: View, U: Equatable>(
         if keyPath: KeyPath<EnvironmentValues, U>,
@@ -247,7 +220,6 @@ extension View {
             }
         }
     }
-    
     public func modify<T: ViewModifier>(
         @ViewBuilder modifier: () -> T
     ) -> ModifiedContent<Self, T> {

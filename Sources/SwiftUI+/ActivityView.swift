@@ -13,7 +13,6 @@ import SwiftUI
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 public struct ActivityView: View {
-    
     public enum IndicatorType {
         case arcs(count: Int = 3, lineWidth: CGFloat = 2)
         case `default`(count: Int = 8)
@@ -23,20 +22,16 @@ public struct ActivityView: View {
         case growingArcs(color: Color = .black, lineWidth: CGFloat = 4)
         case growingCircle
     }
-    
     @Binding private var isVisible: Bool
     private var type: IndicatorType
-    
     public init(isVisible: Binding<Bool>, type: IndicatorType) {
         self._isVisible = isVisible
         self.type = type
     }
-    
     public var body: some View {
         if isVisible { indicator }
         else { EmptyView() }
     }
-    
     private var indicator: some View {
         ZStack {
             switch type {
@@ -54,7 +49,6 @@ public struct ActivityView: View {
                 GrowingArcsIndicator(color: color, lineWidth: lineWidth)
             case .growingCircle:
                 GrowingCircleIndicator()
-                
             }
         }
     }
@@ -86,6 +80,7 @@ extension ActivityView {
                     .speed(.random(in: 0.2...0.5))
                     .repeatForever(autoreverses: false)
                 return Group {
+                    // swiftlint:disable identifier_name
                     var p = Path()
                     p.addArc(
                         center: .init(x: size.width / 2, y: size.height / 2),
@@ -95,6 +90,7 @@ extension ActivityView {
                         clockwise: true
                     )
                     return p.strokedPath(.init(lineWidth: lineWidth))
+                    // swiftlint:enable identifier_name
                 }
                 .frame(width: size.width, height: size.height)
                 .rotationEffect(.degrees(rotation))
@@ -126,20 +122,16 @@ extension ActivityView {
             let index: Int
             let count: Int
             let size: CGSize
-            
             @State var opacity: Double = 0.0
-            
             var body: some View {
                 let height = size.height / 3.2
                 let width = height / 2
                 let angle = 2 * .pi / CGFloat(count) * CGFloat(index)
                 let x = (size.width / 2 - height / 2) * cos(angle)
                 let y = (size.height / 2 - height / 2) * sin(angle)
-                
                 let animation = Animation.default
                     .repeatForever(autoreverses: true)
                     .delay(Double(index) / Double(count) / 2)
-                
                 return RoundedRectangle(cornerRadius: width / 2 + 1)
                     .frame(width: width, height: height)
                     .rotationEffect(.init(radians: angle + .pi / 2))
@@ -168,7 +160,6 @@ extension ActivityView {
                 .frame(width: geo.size.width, height: geo.size.height)
             }
         }
-        
         struct ItemView: View {
             let index: Int
             let count: Int
@@ -211,21 +202,17 @@ extension ActivityView {
         let index: Int
         let count: Int
         let size: CGSize
-        
         @State private var scale: CGFloat = 0
         @State private var opacity: Double = 0
-        
         var body: some View {
             let duration = 0.5
             let itemSize = size.height / 5
             let angle = 2 * CGFloat.pi / .init(count) * .init(index)
             let x = (size.width / 2 - itemSize / 2) * cos(angle)
             let y = (size.height / 2 - itemSize / 2) * sin(angle)
-            
             let animation = Animation.linear(duration: duration)
                 .repeatForever(autoreverses: true)
                 .delay(duration * .init(index) / .init(count) * 2)
-            
             return Circle()
                 .frame(width: itemSize, height: itemSize)
                 .scaleEffect(scale)
@@ -251,14 +238,16 @@ extension ActivityView {
         let colors: [Color]
         let lineCap: CGLineCap
         let lineWidth: CGFloat
-        
         @State private var rotation: Double = 0
-        
         var body: some View {
-            let conic = AngularGradient(gradient: .init(colors: colors), center: .center, startAngle: .zero, endAngle: .degrees(360))
+            let conic = AngularGradient(
+                gradient: .init(colors: colors),
+                center: .center,
+                startAngle: .zero,
+                endAngle: .degrees(360)
+            )
             let animation = Animation.linear(duration: 1.5)
                 .repeatForever(autoreverses: false)
-            
             return ZStack {
                 Circle()
                     .stroke(colors.first ?? .white, lineWidth: lineWidth)
@@ -285,7 +274,6 @@ extension ActivityView {
         let color: Color
         let lineWidth: CGFloat
         @State private var arcParam: Double = 0
-        
         var body: some View {
             let animation = Animation.easeIn(duration: 2)
                 .repeatForever(autoreverses: false)
@@ -298,7 +286,7 @@ extension ActivityView {
                     }
                 }
         }
-        
+        // swiftlint:disable identifier_name
         struct GrowingArc: Shape {
             var maxLength = 2 * Double.pi - 0.7
             var lag = 0.35
@@ -321,9 +309,7 @@ extension ActivityView {
                 var end = h * first
                 if h > 1 { end = first + (h - 1) * second }
                 let start = end + len
-                
                 var p = Path()
-                
                 p.addArc(
                     center: .init(x: rect.size.width / 2, y: rect.size.height / 2),
                     radius: rect.size.width / 2,
@@ -331,10 +317,10 @@ extension ActivityView {
                     endAngle: .init(radians: end),
                     clockwise: true
                 )
-                
                 return p
             }
         }
+        // swiftlint:enable identifier_name
     }
 }
 
@@ -345,11 +331,9 @@ extension ActivityView {
     struct GrowingCircleIndicator: View {
         @State private var scale: CGFloat = 0
         @State private var opacity: Double = 0
-        
         var body: some View {
             let animation = Animation.easeIn(duration: 1.1)
                 .repeatForever(autoreverses: false)
-            
             return Circle()
                 .scaleEffect(scale)
                 .opacity(opacity)

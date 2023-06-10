@@ -17,7 +17,6 @@ extension DispatchQoS.QoSClass {
     public static var current: Self {
         Self(rawValue: qos_class_self()) ?? .unspecified
     }
-    
     #if canImport(Foundation)
     public init(qos: QualityOfService) {
         switch qos {
@@ -50,7 +49,7 @@ extension DispatchQoS.QoSClass: CaseIterable {
 }
 
 extension DispatchQoS.QoSClass: Comparable {
-    public static func <(lhs: Self, rhs: Self) -> Bool {
+    public static func < (lhs: Self, rhs: Self) -> Bool {
         lhs.rawValue.rawValue < rhs.rawValue.rawValue
     }
 }

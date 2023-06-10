@@ -18,12 +18,10 @@ import AppKit
 #endif
 
 extension CGColor {
-    
     #if canImport(UIKit)
     /// Convert this color into a `UIColor` type.
     public var uiColor: UIColor? { .init(cgColor: self) }
     #endif
-    
     #if canImport(AppKit) && !targetEnvironment(macCatalyst)
     /// Convert this color into a `NSColor` type.
     public var nsColor: NSColor? { .init(cgColor: self) }

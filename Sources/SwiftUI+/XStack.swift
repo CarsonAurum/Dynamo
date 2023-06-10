@@ -14,14 +14,11 @@ import SwiftUI
 public struct XStack<Content: View>: View {
     public let alignment: Alignment
     public let content: Content
-    
     public init(alignment: Alignment = .center, @ViewBuilder content: @escaping () -> Content) {
         self.alignment = alignment
         self.content = content()
     }
-    
-    @inlinable
-    public var body: some View {
+    @inlinable public var body: some View {
         ZStack(alignment: alignment) {
             XSpacer()
             content

@@ -11,7 +11,6 @@ import SwiftUI
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension Animation {
-    
     /// Construct a new animation with the given friction and tension.
     ///
     /// The function makes use of a physics-based spring model to provide a realistic feeling motion.
@@ -40,4 +39,3 @@ extension Animation {
 }
 
 #endif
-

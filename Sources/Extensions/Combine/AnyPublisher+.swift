@@ -26,7 +26,6 @@ extension AnyPublisher {
                 .eraseToAnyPublisher()
         }
     }
-    
     /// Construct a new type-erased value publisher with the given value.
     ///
     /// - Parameter output: The value to wrap within a type-erased publisher.
@@ -36,7 +35,6 @@ extension AnyPublisher {
             .setFailureType(to: Failure.self)
             .eraseToAnyPublisher()
     }
-    
     /// Construct a new type-erased failure publisher with the given failure.
     ///
     /// - Parameter failure: The failure to wrap within a type-erased publisher.
@@ -45,10 +43,10 @@ extension AnyPublisher {
         Result.Publisher(failure)
             .eraseToAnyPublisher()
     }
-    
     /// Construct a new empty publisher that can optionally be fulfilled immediately.
     ///
-    /// - Parameter completeImmediately: A flag to determine if this publisher should complete immediately on return of this function.
+    /// - Parameter completeImmediately: A flag to determine if this publisher should complete immediately on
+    /// return of this function.
     /// - Returns: The newly-created type-erased publisher.
     public static func empty(completeImmediately: Bool = true) -> Self {
         Empty(completeImmediately: completeImmediately)

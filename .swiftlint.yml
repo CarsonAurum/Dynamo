@@ -1,0 +1,151 @@
+# Lint Rules
+opt_in_rules:
+#    - anyobject_protocol
+    - attributes
+    - array_init
+    - balanced_xctest_lifecycle
+    - blanket_disable_command
+    - block_based_kvo
+    - closing_brace
+    - closure_parameter_position
+    - collection_alignment
+    - colon
+    - comma
+    - comma_inheritance
+    - comment_spacing
+    - compiler_protocol_init
+    - computed_accessors_order
+    - contains_over_filter_count
+    - contains_over_filter_is_empty
+    - contains_over_first_not_nil
+    - contains_over_range_nil_comparison
+    - convenience_type
+    - control_statement
+    - direct_return
+    - discouraged_direct_init
+    - duplicate_conditions
+    - duplicate_enum_cases
+    - duplicate_imports
+    - duplicated_key_in_dictionary_literal
+    - empty_enum_arguments
+    - empty_parameters
+    - empty_parentheses_with_trailing_closure
+    - for_where
+    - force_cast
+    - force_try
+    - generic_type_name
+    - identifier_name
+    - implicit_getter
+    - invalid_swiftlint_command
+    - is_disjoint
+    - large_tuple
+    - leading_whitespace
+    - legacy_cggeometry_functions
+    - legacy_constant
+    - legacy_constructor
+    - legacy_hashing
+    - legacy_nsgeometry_functions
+    - legacy_random
+    - line_length
+    - mark
+    - no_fallthrough_only
+    - no_space_in_method_call
+    - ns_number_init_as_function_reference
+    - nsobject_prefer_isequal
+    - opening_brace
+    - operator_whitespace
+    - orphaned_doc_comment
+    - private_unit_test
+    - protocol_property_accessors_order
+    - reduce_boolean
+    - redundant_discardable_let
+    - redundant_objc_attribute
+    - redundant_optional_initialization
+    - redundant_set_access_control
+    - redundant_string_enum_value
+    - redundant_void_return
+    - return_arrow_whitespace
+    - self_in_property_initialization
+    - shorthand_operator
+    - superfluous_disable_command
+    - switch_case_alignment
+    - syntactic_sugar
+    - trailing_comma
+    - trailing_newline
+    - trailing_semicolon
+    - trailing_whitespace
+    - type_name
+    - unavailable_condition
+    - unneeded_break_in_switch
+    - unused_closure_parameter
+    - unused_control_flow_label
+    - unused_enumerated
+    - unused_optional_binding
+    - unused_setter_value
+    
+disabled_rules:
+    - accessibility_label_for_image
+    - accessibility_trait_for_button
+    - anonymous_argument_in_multiline_closure
+    - class_delegate_protocol
+    - closure_body_length
+    - conditional_returns_on_newline
+    - custom_rules
+    - cyclomatic_complexity
+    - deployment_target
+    - file_length
+    - function_body_length
+    - function_parameter_count
+    - inclusive_language
+    - multiple_closures_with_trailing_closure
+    - nesting
+    - notification_center_detachment
+    - private_over_fileprivate
+    - statement_position
+    - todo
+    - type_body_length
+    - valid_ibinspectable
+    - vertical_parameter_alignment
+    - vertical_whitespace
+    - void_function_in_ternary
+    - void_return
+    - xctfail_message
+
+# Paths to ignore.
+excluded:
+    - Carthage
+    - Pods
+# Paths to include.
+included:
+    - Sources
+    - Tests
+
+# SwiftLint fails if no lintable files are found.
+allow_zero_lintable_files: false
+
+# Rule Configuration
+force_cast: warning
+force_try: warning
+identifier_name:
+    min_length: 3
+    error: 4
+    excluded:
+    - pi
+    - x
+    - y
+    - dx
+    - dy
+    - fn
+    - id
+    - URL
+    allowed_symbols: ["_"]
+large_tuple:
+    warning: 4
+    error: 6
+line_length:
+    warning: 120
+    error: 200
+type_name:
+    allowed_symbols: ["_"]
+reporter: "xcode"
+

@@ -12,7 +12,6 @@ import Dispatch
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension Future {
-    
     /// Construct a new future with an asynchronous closure payload.
     ///
     /// - Parameters:
@@ -29,7 +28,6 @@ extension Future {
             }
         }
     }
-    
     /// Construct a new future with an asynchronous throwing closure payload.
     ///
     /// - Parameters:
@@ -51,7 +49,6 @@ extension Future {
             }
         }
     }
-    
     /// Construct a new future to return the given result.
     ///
     /// - Parameter value: The value to wrap within the newly constructed future.
@@ -59,7 +56,6 @@ extension Future {
     public static func just(_ value: Result<Output, Failure>) -> Self {
         Self { $0(value) }
     }
-    
     /// Attach a new result-based completion handler to this future.
     ///
     /// - Parameter receiveCompletion: The completion to execute once the future is fulfilled.
@@ -78,7 +74,6 @@ extension Future {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension Future where Output == Void {
-    
     /// Perform a new action once this future is fulfilled.
     ///
     /// - Parameter action: The action to perform when this future is fulfilled.
@@ -86,7 +81,6 @@ extension Future where Output == Void {
     public static func perform(_ action: @escaping () -> Void) -> Self {
         Self { $0(.success(action())) }
     }
-    
     /// Perform a new action once this future is fulfilled within the context of the given scheduler.
     ///
     /// - Parameters:
@@ -107,7 +101,6 @@ extension Future where Output == Void {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension Future where Output == Void, Failure == Never {
-    
     /// Creates a new `Future` that completes with a success after executing the provided closure.
     ///
     /// This method can be useful when you need to wrap synchronous, non-failing work into a `Future`.
@@ -120,15 +113,14 @@ extension Future where Output == Void, Failure == Never {
     ///
     /// - Parameter action: A closure that performs work without any input.
     /// - Returns: A `Future` that represents the completion of the work.
-    
-    public static func Error(_ action: @escaping () -> Void) -> Self {
+    public static func error(_ action: @escaping () -> Void) -> Self {
         Self { $0(.success(action())) }
     }
-    
     /// Schedules the execution of a closure on a specified `Scheduler`, and returns a new `Future` that completes
     /// with a success after the closure has been executed.
     ///
-    /// This method can be useful when you need to perform non-failing work on a specific queue or in a specific context.
+    /// This method can be useful when you need to perform non-failing work on a specific queue or in
+    /// a specific context.
     ///
     /// Usage:
     ///
@@ -141,7 +133,6 @@ extension Future where Output == Void, Failure == Never {
     ///   - options: Scheduler options to customize the execution of the closure. Defaults to `nil`.
     ///   - action: A closure that performs work without any input.
     /// - Returns: A `Future` that represents the completion of the work.
-    
     public static func perform<S: Scheduler>(
         on scheduler: S,
         options: S.SchedulerOptions? = nil,
@@ -155,7 +146,6 @@ extension Future where Output == Void, Failure == Never {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension Future where Output == Void, Failure == Error {
-    
     /// Creates a new `Future` that completes with a success after executing the provided closure.
     ///
     /// This method can be useful when you need to wrap synchronous, non-throwing work into a `Future`.
@@ -168,12 +158,11 @@ extension Future where Output == Void, Failure == Error {
     ///
     /// - Parameter action: A closure that performs work without any input.
     /// - Returns: A `Future` that represents the completion of the work.
-    
     public static func perform(_ action: @escaping () -> Void) -> Self {
         Self { $0(.success(action())) }
     }
-    
-    /// Creates a new `Future` that completes with a success after executing the provided closure, or fails if the closure throws an error.
+    /// Creates a new `Future` that completes with a success after executing the provided closure,
+    /// or fails if the closure throws an error.
     ///
     /// This method can be useful when you need to wrap synchronous, potentially throwing work into a `Future`.
     ///
@@ -187,7 +176,6 @@ extension Future where Output == Void, Failure == Error {
     ///
     /// - Parameter action: A closure that performs work without any input and can throw an error.
     /// - Returns: A `Future` that represents the completion of the work, or the error thrown.
-    
     public static func perform(_ action: @escaping () throws -> Void) -> Self {
         Self {
             do {
@@ -197,10 +185,11 @@ extension Future where Output == Void, Failure == Error {
             }
         }
     }
-    
-    /// Schedules the execution of a potentially throwing closure on a specified `Scheduler`, and returns a new `Future` that completes with a success after the closure has been executed, or fails if the closure throws an error.
+    /// Schedules the execution of a potentially throwing closure on a specified `Scheduler`, and returns a new `Future`
+    /// that completes with a success after the closure has been executed, or fails if the closure throws an error.
     ///
-    /// This method can be useful when you need to perform potentially throwing work on a specific queue or in a specific context.
+    /// This method can be useful when you need to perform potentially throwing work
+    /// on a specific queue or in a specific context.
     ///
     /// Usage:
     ///
@@ -232,7 +221,6 @@ extension Future where Output == Void, Failure == Error {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension Future where Failure == Error {
-    
     /// Construct a new future capable of handling a throwing closure.
     ///
     /// - Parameter attemptToFulfill: The throwing closure to execute when fulfilling this promise.

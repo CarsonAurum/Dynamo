@@ -14,10 +14,7 @@ import SwiftUI
 public struct EnvironmentValueAccessView<Value, Content: View>: View {
     private let keyPath: KeyPath<EnvironmentValues, Value>
     private let content: (Value) -> Content
-    
-    @usableFromInline
-    @Environment var value: Value
-    
+    @usableFromInline @Environment var value: Value
     public init(
         _ keyPath: KeyPath<EnvironmentValues, Value>,
         @ViewBuilder content: @escaping (Value) -> Content
@@ -26,7 +23,6 @@ public struct EnvironmentValueAccessView<Value, Content: View>: View {
         self.content = content
         self._value = .init(keyPath)
     }
-    
     public var body: some View {
         content(value)
     }
