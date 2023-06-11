@@ -10,10 +10,11 @@
 import Foundation
 #endif
 
-public enum _CastError: Error { case invalidCast }
+@usableFromInline
+internal enum _CastError: Error { case invalidCast }
 
-@inlinable
-public func _cast<T, U>(_ value: T, to type: U.Type) -> U? {
+@usableFromInline
+internal func _cast<T, U>(_ value: T, to type: U.Type) -> U? {
     guard let result = value as? U else { return nil }
     return result
 }

@@ -11,23 +11,52 @@ import SwiftUI
 
 // MARK: ActivityView
 
+/// A SwiftUI replacement for `UIActivityIndicatorView`.
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 public struct ActivityView: View {
+    /// An enumeration containing information regarding the type of indicator to display.
+    ///
+    /// Each case of this type provides various parameters to modify the exact mechanics of the selected indicator type.
     public enum IndicatorType {
+        /// Semi-circular arcs rotate around a circle.
+        /// - Parameters:
+        ///   - count: The number of arcs to render.
+        ///   - lineWidth: The width of the lines that compose each arc.
         case arcs(count: Int = 3, lineWidth: CGFloat = 2)
+        /// The indicator similar to `UIActivityIndicatorView`.
+        /// - Parameter count: Control the number of dashes.
         case `default`(count: Int = 8)
+        /// A sound-EQ inspired indicator.
+        /// - Parameter count: Control the number of lines.
         case equalizer(count: Int = 5)
+        /// A circle of dots with varying opacity to emulate movement.
+        /// - Parameter count: The number of dots to display.
         case flickeringDots(count: Int = 8)
+        /// A gradient circle with angular passes to change the color.
+        /// - Parameters:
+        ///   - colors: The colors of the gradient.
+        ///   - lineCap: The end of  the line in the gradient.
+        ///   - lineWidth: The line width of the gradient.
         case gradient(_ colors: [Color], lineCap: CGLineCap = .butt, lineWidth: CGFloat = 4)
+        /// An arc expands in length and completes a circle briefly, before animating away.
+        /// - Parameters:
+        ///   - color: The color of the arc.
+        ///   - lineWidth: The width of the line that composes the arc.
         case growingArcs(color: Color = .black, lineWidth: CGFloat = 4)
+        /// A circle expands in size while fading in opacity.
         case growingCircle
     }
     @Binding private var isVisible: Bool
     private var type: IndicatorType
+    /// Construct a new indicator of the given type, with a binding to a boolean to toggle visibility.
+    /// - Parameters:
+    ///   - isVisible: A binding to a boolean to toggle the visibility of the indicator.
+    ///   - type: The type of indicator to display.
     public init(isVisible: Binding<Bool>, type: IndicatorType) {
         self._isVisible = isVisible
         self.type = type
     }
+    /// The content and behavior of the view.
     public var body: some View {
         if isVisible { indicator }
         else { EmptyView() }

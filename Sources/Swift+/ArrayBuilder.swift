@@ -12,6 +12,7 @@
 /// declarative manner.
 @resultBuilder
 public enum ArrayBuilder {
+    // swiftlint:disable missing_docs
     public static func buildExpression<Element>(_ element: Element) -> [Element] { [element] }
     public static func buildExpression<Element>(_ elements: [Element]) -> [Element] { elements }
     public static func buildExpression<Element>(_ element: Void) -> [Element] { [] }
@@ -50,6 +51,7 @@ public enum ArrayBuilder {
     public static func buildArray<Element>(_ elements: [[Element]]) -> [Element] {
         elements.flatMap { $0 }
     }
+    // swiftlint:enable missing_docs
 }
 
 extension Array {

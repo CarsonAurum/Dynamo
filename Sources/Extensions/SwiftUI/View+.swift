@@ -13,6 +13,26 @@ import SwiftUI
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension View {
+    /// Modify the font of a view based on provided parameters.
+    ///
+    /// This method allows you to easily modify the font and its weight for any SwiftUI `View`.
+    /// If a `Font.Weight` is provided, it applies the specified font with the given weight to the view.
+    /// If the `Font.Weight` is `nil`, it applies the font without changing the weight of the current font.
+    ///
+    /// Usage:
+    /// ```swift
+    /// Text("Hello, World!")
+    ///     .font(.title, weight: .bold)
+    /// ```
+    /// This code snippet sets the font of the text to `title` and weight to `bold`.
+    ///
+    /// - Parameters:
+    ///   - font: The desired `Font` to be applied to the `View`.
+    ///   - weight: The desired `Font.Weight` to be applied to the `View`. This is an optional parameter.
+    ///
+    /// - Returns: The `View` with the modified font and potentially modified weight.
+    ///
+    /// - Note: If the `weight` parameter is `nil`, only the font will be changed.
     @inlinable
     @ViewBuilder
     public func font(_ font: Font, weight: Font.Weight?) -> some View {
@@ -40,6 +60,8 @@ extension View {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension View {
+    /// Perform type-erasure on this view.
+    /// - Returns: A type-erased copy of this view.
     @inlinable
     public func eraseToAnyView() -> AnyView { .init(self) }
 }

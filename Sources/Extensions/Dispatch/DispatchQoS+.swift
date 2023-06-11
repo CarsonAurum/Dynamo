@@ -10,6 +10,11 @@
 import Dispatch
 
 extension DispatchQoS: Comparable {
+    /// Compare two qualities of service via their underlying raw values.
+    /// - Parameters:
+    ///   - lhs: The first QpS to compare.
+    ///   - rhs: The second QoS to compare.
+    /// - Returns: The result of comparison between the two given instances.
     public static func < (lhs: Self, rhs: Self) -> Bool {
         lhs.qosClass < rhs.qosClass
     }

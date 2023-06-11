@@ -15,6 +15,7 @@ public struct XSpacer: View {
     /// Trivial initializer.
     @inlinable
     public init() { }
+    /// The content and behavior of the view.
     @inlinable public var body: some View {
         VStack(spacing: 0) {
             Spacer()
@@ -31,6 +32,7 @@ public struct HSpacer: View {
     /// Trivial initializer.
     @inlinable
     public init() { }
+    /// The content and behavior of the view.
     @inlinable public var body: some View {
         HStack { Spacer() }
     }
@@ -42,6 +44,7 @@ public struct VSpacer: View {
     /// Trivial initializer.
     @inlinable
     public init() { }
+    /// The content and behavior of the view.
     @inlinable public var body: some View {
         VStack { Spacer() }
     }

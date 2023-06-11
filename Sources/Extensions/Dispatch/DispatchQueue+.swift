@@ -14,7 +14,14 @@ import Foundation
 #endif
 
 extension DispatchQueue {
-    #if canImport(Foundation)
+#if canImport(Foundation)
+    /// Creates a new instance of a DispatchQueue with a unique label.
+    ///
+    /// - Parameters:
+    ///   - qos: The quality of service (QoS) that you want to assign to tasks that you add to this queue.
+    ///   - attributes: The behavior attributes of the queue. Default is an empty array.
+    ///   - autoreleaseFrequency: The frequency with which to autorelease objects created by this queue.
+    ///   - target: The target dispatch queue to which to submit tasks.
     public convenience init(
         qos: DispatchQoS = .unspecified,
         attributes: DispatchQueue.Attributes = [],
@@ -29,7 +36,14 @@ extension DispatchQueue {
             target: target
         )
     }
-    #endif
+#endif
+    /// Creates a new instance of a DispatchQueue with a unique label (Overload version with QoS class).
+    ///
+    /// - Parameters:
+    ///   - qosClass: The quality-of-service class that determines the priority of tasks in the queue.
+    ///   - attributes: The behavior attributes of the queue. Default is an empty array.
+    ///   - autoreleaseFrequency: The frequency with which to autorelease objects created by this queue.
+    ///   - target: The target dispatch queue to which to submit tasks.
     @_disfavoredOverload
     public convenience init(
         qosClass: DispatchQoS.QoSClass = .unspecified,
@@ -39,10 +53,19 @@ extension DispatchQueue {
     ) {
         self.init(
             qos: .init(qosClass: qosClass, relativePriority: 0),
-            attributes: attributes, autoreleaseFrequency: autoreleaseFrequency,
+            attributes: attributes,
+            autoreleaseFrequency: autoreleaseFrequency,
             target: target
         )
     }
+    /// Creates a new instance of a DispatchQueue with a label derived from the input type.
+    ///
+    /// - Parameters:
+    ///   - label: The type to use to create a string label for this queue.
+    ///   - qos: The quality of service (QoS) that you want to assign to tasks that you add to this queue.
+    ///   - attributes: The behavior attributes of the queue. Default is an empty array.
+    ///   - autoreleaseFrequency: The frequency with which to autorelease objects created by this queue.
+    ///   - target: The target dispatch queue to which to submit tasks.
     public convenience init<T>(
         label: T.Type,
         qos: DispatchQoS = .unspecified,
@@ -60,6 +83,15 @@ extension DispatchQueue {
             target: target
         )
     }
+    /// Creates a new instance of a DispatchQueue with a label derived from the input type (Overload
+    /// version with QoS class).
+    ///
+    /// - Parameters:
+    ///   - label: The type to use to create a string label for this queue.
+    ///   - qosClass: The quality-of-service class that determines the priority of tasks in the queue.
+    ///   - attributes: The behavior attributes of the queue. Default is an empty array.
+    ///   - autoreleaseFrequency: The frequency with which to autorelease objects created by this queue.
+    ///   - target: The target dispatch queue to which to submit tasks.
     @_disfavoredOverload
     public convenience init<T>(
         label: T.Type,
@@ -71,7 +103,8 @@ extension DispatchQueue {
         self.init(
             label: label,
             qos: .init(qosClass: qosClass, relativePriority: 0),
-            attributes: attributes, autoreleaseFrequency: autoreleaseFrequency,
+            attributes: attributes,
+            autoreleaseFrequency: autoreleaseFrequency,
             target: target
         )
     }
@@ -99,10 +132,8 @@ extension DispatchQueue {
     /// - Returns: `true` if the current queue matches the specified queue, otherwise `false`.
     public static func isCurrent(_ queue: DispatchQueue) -> Bool {
         let key = DispatchSpecificKey<Void>()
-
         queue.setSpecific(key: key, value: ())
         defer { queue.setSpecific(key: key, value: nil) }
-
         return Self.getSpecific(key: key) != nil
     }
     /// Runs a passed closure asynchronously after a certain time interval.
@@ -168,12 +199,38 @@ extension DispatchQueue {
             // swiftlint:enable force_unwrapping
         }
     }
+    /// Concurrently performs a task for a specific number of iterations.
+    ///
+    /// This method applies the `concurrentPerform` function in a synchronous manner on the current DispatchQueue.
+    ///
+    /// The `concurrentPerform` function executes the given work item the specified number of times and returns after
+    /// all work items have completed. The system makes no guarantee about the order in which the work items execute.
+    ///
+    /// - Parameters:
+    ///   - iterations: The number of times to execute the work item.
+    ///   - work: The work item to be performed. This closure takes an index as a parameter that indicates the
+    ///   current iteration.
     public func concurrentPerform(iterations: Int, execute work: @escaping (Int) -> Void) {
         self.sync { DispatchQueue.concurrentPerform(iterations: iterations, execute: work) }
     }
 }
 
 extension DispatchQueue {
+    /// Accesses the value for a custom key stored in the Dispatch queue's specific data.
+    ///
+    /// Use this subscript to get and set values for a specific key in the Dispatch queue.
+    /// The keys are defined by you, and must be instances of DispatchSpecificKey.
+    ///
+    /// The returned value is optional because a custom key may not have been previously set,
+    /// or may have been set to nil.
+    ///
+    /// Example:
+    ///
+    ///     let myKey = DispatchSpecificKey<Int>()
+    ///     myQueue[myKey] = 42
+    ///     print(myQueue[myKey])  // Prints Optional(42)
+    ///
+    /// - Parameter key: The key to get and set in the queue's specific data.
     public subscript<T>(_ key: DispatchSpecificKey<T>) -> T? {
         get { self.getSpecific(key: key) }
         set { self.setSpecific(key: key, value: newValue) }
