@@ -11,6 +11,7 @@ import SwiftUI
 
 
 /// A SwiftUI `View` that provides access to a specific value from the `EnvironmentValues`.
+/// 
 /// This struct helps to wrap environment values and pass them to the specified content.
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 public struct EnvironmentValueAccessView<Value, Content: View>: View {

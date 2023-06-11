@@ -32,4 +32,10 @@ extension Optional {
         }
     }
     // swiftlint:enable self_binding
+    @inlinable
+    public func forceUnwrap() -> Wrapped {
+        // swiftlint:disable force_try
+        try! unwrap()
+        // swiftlint:enable force_try
+    }
 }

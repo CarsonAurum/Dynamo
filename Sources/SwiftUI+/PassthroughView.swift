@@ -9,7 +9,7 @@
 #if canImport(SwiftUI)
 import SwiftUI
 
-/// A wrapper view to allow seamess passthrough of its containing v
+/// A wrapper view to allow seamess passthrough of its containing view.
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 public struct PassthroughView<Content: View>: View {
     @usableFromInline internal let content: Content

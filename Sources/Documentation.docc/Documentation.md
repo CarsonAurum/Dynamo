@@ -4,6 +4,9 @@ The essential Swift toolkit for Apple platforms
 
 ## Topics
 
+### Swift Standard Library Expansion
+- ``ArrayBuilder``
+
 ### Assertions
 - ``assert(_:)-80h58``
 - ``assert(_:)-5bd3y``
@@ -18,6 +21,9 @@ The essential Swift toolkit for Apple platforms
 ### Concurrency
 - ``withUnsafeContinuation(_:)``
 - ``withUnsafeThrowingContinuation(_:)``
+
+### SwiftUI Views
+- ``ActivityView``
 
 ### SwiftUI Layout
 - ``XStack``
