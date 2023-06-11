@@ -190,7 +190,7 @@ extension DispatchQueue {
         var lastFireTime = DispatchTime.now()
         var workItem: DispatchWorkItem?
         return {
-            let dispatchDelay = DispatchTimeInterval.milliseconds(.init(delay * 1000))
+            let dispatchDelay = DispatchTimeInterval.milliseconds(.init(delay * 1_000))
             workItem?.cancel()
             workItem = .init { action() }
             lastFireTime = DispatchTime.now()

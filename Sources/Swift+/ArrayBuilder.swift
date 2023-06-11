@@ -34,12 +34,12 @@ public enum ArrayBuilder {
     public static func buildBlock<Element>(_ elements: Element...) -> [Element] { elements }
     public static func buildBlock<Element>(_ elements: [Element]) -> [Element] { elements }
     public static func buildIf<Element>(_ element: Element?) -> [Element] {
-        if let element = element { return [element] }
+        if let element { return [element] }
         else { return [] }
     }
     public static func buildIf<Element>(_ element: [Element]?) -> [Element] { element ?? [] }
     public static func buildOptional<Element>(_ component: Element?) -> [Element] {
-        if let component = component { return [component] }
+        if let component { return [component] }
         else { return [] }
     }
     public static func buildOptional<Element>(_ component: [Element]?) -> [Element] { component ?? [] }

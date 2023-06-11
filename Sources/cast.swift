@@ -54,7 +54,7 @@ public func cast<T, U>(_ value: T, to type: U.Type = U.self, `default`: U) -> U 
 /// - Throws: A `Swift.Error` subtype  if the cast fails.
 @inlinable
 public func cast<T, U>(_ value: T?, to type: U.Type = U.self) throws -> U? {
-    guard let value = value else { return nil }
+    guard let value else { return nil }
     #if canImport(Foundation)
     guard !(value is NSNull) else { return nil }
     #endif

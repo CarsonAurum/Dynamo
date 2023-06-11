@@ -6,9 +6,9 @@
 //  Carson Rau - 6/9/23
 //
 
-#if canImport(Foundation) && canImport(Darwin)
-import Foundation
+#if canImport(Darwin) && canImport(Foundation)
 import Darwin
+import Foundation
 
 extension Bundle {
     // swiftlint:disable legacy_objc_type
@@ -18,7 +18,7 @@ extension Bundle {
     public static var current: Bundle? {
         let caller = Thread.callStackReturnAddresses[1]
         if let bundle = cache.object(forKey: caller) { return bundle }
-        var info  = Dl_info(dli_fname: nil, dli_fbase: nil, dli_sname: nil, dli_saddr: nil)
+        var info = Dl_info(dli_fname: nil, dli_fbase: nil, dli_sname: nil, dli_saddr: nil)
         dladdr(caller.pointerValue, &info)
         let path = String(cString: info.dli_fname)
         for bundle in Bundle.allBundles + Bundle.allFrameworks {

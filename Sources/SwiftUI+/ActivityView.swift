@@ -64,7 +64,7 @@ public struct ActivityView: View {
     private var indicator: some View {
         ZStack {
             switch type {
-            case .arcs(let count, let lineWidth):
+            case let .arcs(count, lineWidth):
                 ArcsIndicator(count: count, lineWidth: lineWidth)
             case .default(let count):
                 DefaultIndicator(count: count)
@@ -72,9 +72,9 @@ public struct ActivityView: View {
                 EqualizerIndicator(count: count)
             case .flickeringDots(let count):
                 FlickeringDotsIndicator(count: count)
-            case .gradient(let colors, let lineCap, let lineWidth):
+            case let .gradient(colors, lineCap, lineWidth):
                 GradientIndicator(colors: colors, lineCap: lineCap, lineWidth: lineWidth)
-            case .growingArcs(let color, let lineWidth):
+            case let .growingArcs(color, lineWidth):
                 GrowingArcsIndicator(color: color, lineWidth: lineWidth)
             case .growingCircle:
                 GrowingCircleIndicator()

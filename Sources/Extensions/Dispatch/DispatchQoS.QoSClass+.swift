@@ -3,7 +3,7 @@
 //
 //  Extensions to the Dispatch DispatchQoS.QoSClass type.
 //
-//  Created by Carson Rau on 6/9/23.
+//  Carson Rau - 6/9/23
 //
 
 #if canImport(Dispatch)

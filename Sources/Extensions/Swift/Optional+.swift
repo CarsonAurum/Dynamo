@@ -10,6 +10,7 @@
 internal enum _OptionalError: Error { case unwrap }
 
 extension Optional {
+    // swiftlint:disable self_binding
     /// Attempt to unwrap this optional, returning the result, or throwing an error if unsuccessful.
     /// - Returns: The unwrapped value, if it exists.
     /// - Throws: An error if the unwrapping fails.
@@ -30,4 +31,5 @@ extension Optional {
             throw try error()
         }
     }
+    // swiftlint:enable self_binding
 }
