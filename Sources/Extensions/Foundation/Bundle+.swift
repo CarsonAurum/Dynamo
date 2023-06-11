@@ -11,7 +11,9 @@ import Foundation
 import Darwin
 
 extension Bundle {
+    // swiftlint:disable legacy_objc_type
     private static let cache = NSCache<NSNumber, Bundle>()
+    // swiftlint:enable legacy_objc_type
     public static var current: Bundle? {
         let caller = Thread.callStackReturnAddresses[1]
         if let bundle = cache.object(forKey: caller) { return bundle }

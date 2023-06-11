@@ -6,7 +6,11 @@
 //  Carson Rau - 1/31/22
 //
 
-public enum _OptionalError: Error { case unwrap }
+/// An error thrown when an optional cannot be successfully unwrapped by the functions provided in this package.
+public enum _OptionalError: Error {
+    /// The unwrapping error type.
+    case unwrap
+}
 
 extension Optional {
     @inlinable

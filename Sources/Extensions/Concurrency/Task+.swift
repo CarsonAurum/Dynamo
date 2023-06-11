@@ -7,7 +7,6 @@
 //
 
 #if canImport(_Concurrency)
-
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension Task {
     public static func firstResult<R: Sendable>(

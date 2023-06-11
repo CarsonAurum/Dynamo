@@ -58,10 +58,10 @@ public struct ActivityView: View {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension ActivityView {
-    struct ArcsIndicator: View {
-        let count: Int
-        let lineWidth: CGFloat
-        var body: some View {
+    internal struct ArcsIndicator: View {
+        internal let count: Int
+        internal let lineWidth: CGFloat
+        internal var body: some View {
             GeometryReader { geo in
                 ForEach(0..<count, id: \.self) { idx in
                     ItemView(lineWidth: lineWidth, index: idx, count: count, size: geo.size)
@@ -69,14 +69,15 @@ extension ActivityView {
                 .frame(width: geo.size.width, height: geo.size.height)
             }
         }
-        struct ItemView: View {
-            let lineWidth: CGFloat
-            let index: Int
-            let count: Int
-            let size: CGSize
+        internal struct ItemView: View {
+            internal let lineWidth: CGFloat
+            internal let index: Int
+            internal let count: Int
+            internal let size: CGSize
             @State private var rotation: Double = 0
-            var body: some View {
-                let animation = Animation.default
+            internal var body: some View {
+                let animation: Animation =
+                    .default
                     .speed(.random(in: 0.2...0.5))
                     .repeatForever(autoreverses: false)
                 return Group {
@@ -108,9 +109,9 @@ extension ActivityView {
 // MARK: DefaultIndicator
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension ActivityView {
-    struct DefaultIndicator: View {
-        let count: Int
-        var body: some View {
+    internal struct DefaultIndicator: View {
+        internal let count: Int
+        internal var body: some View {
             GeometryReader { geo in
                 ForEach(0..<count, id: \.self) { idx in
                     ItemView(index: idx, count: count, size: geo.size)
@@ -118,18 +119,19 @@ extension ActivityView {
                 .frame(width: geo.size.width, height: geo.size.height)
             }
         }
-        struct ItemView: View {
-            let index: Int
-            let count: Int
-            let size: CGSize
-            @State var opacity: Double = 0.0
-            var body: some View {
+        internal struct ItemView: View {
+            internal let index: Int
+            internal let count: Int
+            internal let size: CGSize
+            @State private var opacity: Double = 0.0
+            internal var body: some View {
                 let height = size.height / 3.2
                 let width = height / 2
                 let angle = 2 * .pi / CGFloat(count) * CGFloat(index)
                 let x = (size.width / 2 - height / 2) * cos(angle)
                 let y = (size.height / 2 - height / 2) * sin(angle)
-                let animation = Animation.default
+                let animation: Animation =
+                    .default
                     .repeatForever(autoreverses: true)
                     .delay(Double(index) / Double(count) / 2)
                 return RoundedRectangle(cornerRadius: width / 2 + 1)
@@ -150,9 +152,9 @@ extension ActivityView {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension ActivityView {
-    struct EqualizerIndicator: View {
-        let count: Int
-        var body: some View {
+    internal struct EqualizerIndicator: View {
+        internal let count: Int
+        internal var body: some View {
             GeometryReader { geo in
                 ForEach(0..<count, id: \.self) { idx in
                     ItemView(index: idx, count: count, size: geo.size)
@@ -160,14 +162,15 @@ extension ActivityView {
                 .frame(width: geo.size.width, height: geo.size.height)
             }
         }
-        struct ItemView: View {
-            let index: Int
-            let count: Int
-            let size: CGSize
+        internal struct ItemView: View {
+            internal let index: Int
+            internal let count: Int
+            internal let size: CGSize
             @State private var scale: CGFloat = 0
-            var body: some View {
+            internal var body: some View {
                 let itemSize = size.width / .init(count) / 2
-                let animation = Animation.easeOut.delay(0.2)
+                let animation: Animation =
+                    .easeOut.delay(0.2)
                     .repeatForever(autoreverses: true)
                     .delay(.init(index) / .init(count) / 2)
                 return RoundedRectangle(cornerRadius: 3)
@@ -187,9 +190,9 @@ extension ActivityView {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension ActivityView {
-    struct FlickeringDotsIndicator: View {
-        let count: Int
-        var body: some View {
+    internal struct FlickeringDotsIndicator: View {
+        internal let count: Int
+        internal var body: some View {
             GeometryReader { geo in
                 ForEach(0..<count, id: \.self) { idx in
                     ItemView(index: idx, count: count, size: geo.size)
@@ -198,13 +201,13 @@ extension ActivityView {
             }
         }
     }
-    struct ItemView: View {
-        let index: Int
-        let count: Int
-        let size: CGSize
+    internal struct ItemView: View {
+        internal let index: Int
+        internal let count: Int
+        internal let size: CGSize
         @State private var scale: CGFloat = 0
         @State private var opacity: Double = 0
-        var body: some View {
+        internal var body: some View {
             let duration = 0.5
             let itemSize = size.height / 5
             let angle = 2 * CGFloat.pi / .init(count) * .init(index)
@@ -234,19 +237,20 @@ extension ActivityView {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension ActivityView {
-    struct GradientIndicator: View {
-        let colors: [Color]
-        let lineCap: CGLineCap
-        let lineWidth: CGFloat
+    internal struct GradientIndicator: View {
+        internal let colors: [Color]
+        internal let lineCap: CGLineCap
+        internal let lineWidth: CGFloat
         @State private var rotation: Double = 0
-        var body: some View {
+        internal var body: some View {
             let conic = AngularGradient(
                 gradient: .init(colors: colors),
                 center: .center,
                 startAngle: .zero,
                 endAngle: .degrees(360)
             )
-            let animation = Animation.linear(duration: 1.5)
+            let animation: Animation =
+                .linear(duration: 1.5)
                 .repeatForever(autoreverses: false)
             return ZStack {
                 Circle()
@@ -270,12 +274,13 @@ extension ActivityView {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension ActivityView {
-    struct GrowingArcsIndicator: View {
-        let color: Color
-        let lineWidth: CGFloat
+    internal struct GrowingArcsIndicator: View {
+        internal let color: Color
+        internal let lineWidth: CGFloat
         @State private var arcParam: Double = 0
-        var body: some View {
-            let animation = Animation.easeIn(duration: 2)
+        internal var body: some View {
+            let animation: Animation =
+                .easeIn(duration: 2)
                 .repeatForever(autoreverses: false)
             return GrowingArc(p: arcParam)
                 .stroke(color, lineWidth: lineWidth)
@@ -287,15 +292,15 @@ extension ActivityView {
                 }
         }
         // swiftlint:disable identifier_name
-        struct GrowingArc: Shape {
-            var maxLength = 2 * Double.pi - 0.7
-            var lag = 0.35
-            var p: Double
-            var animatableData: Double {
-                get { return p }
+        internal struct GrowingArc: Shape {
+            internal var maxLength = 2 * Double.pi - 0.7
+            internal var lag = 0.35
+            internal var p: Double
+            internal var animatableData: Double {
+                get { p }
                 set { p = newValue }
             }
-            func path(in rect: CGRect) -> Path {
+            internal func path(in rect: CGRect) -> Path {
                 let h = p * 2
                 var len = h * maxLength
                 if h > 1 && h < lag + 1 { len = maxLength }
@@ -328,10 +333,10 @@ extension ActivityView {
 
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
 extension ActivityView {
-    struct GrowingCircleIndicator: View {
+    internal struct GrowingCircleIndicator: View {
         @State private var scale: CGFloat = 0
         @State private var opacity: Double = 0
-        var body: some View {
+        internal var body: some View {
             let animation = Animation.easeIn(duration: 1.1)
                 .repeatForever(autoreverses: false)
             return Circle()

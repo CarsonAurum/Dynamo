@@ -163,7 +163,9 @@ extension DispatchQueue {
             workItem?.cancel()
             workItem = .init { action() }
             lastFireTime = DispatchTime.now()
+            // swiftlint:disable force_unwrapping
             queue.asyncAfter(deadline: lastFireTime + dispatchDelay, execute: workItem!)
+            // swiftlint:enable force_unwrapping
         }
     }
     public func concurrentPerform(iterations: Int, execute work: @escaping (Int) -> Void) {

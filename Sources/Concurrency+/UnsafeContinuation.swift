@@ -46,9 +46,11 @@
 public func withUnsafeContinuation<T, U>(
     _ fn: (UnsafeContinuation<U, Never>) -> T
 ) async -> (T, U) {
+    // swiftlint:disable implicitly_unwrapped_optional
     var result0: T!
     let result1 = await withUnsafeContinuation { result0 = fn($0) }
     return (result0, result1)
+    // swiftlint:enable implicitly_unwrapped_optional
 }
 
 /// This function runs an asynchronous operation by calling a closure that takes an `UnsafeContinuation<U, Error>`
@@ -107,4 +109,5 @@ public func withUnsafeThrowingContinuation<T, U>(
     assert(result0 != nil)
     return (try result0.unwrap().get(), result1)
 }
+
 #endif
