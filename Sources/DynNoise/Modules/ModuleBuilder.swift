@@ -29,6 +29,9 @@ extension Module {
     public func blend<Control: Module, U: Module>(control: Control, second: U) -> some Module {
         BlendModule(first: control, second: self, third: second)
     }
+    public func clamp<T: Module, U: Module>(lower: T, upper: U) -> some Module {
+        ClampedModule(first: self, second: lower, third: upper)
+    }
     /// Construct a module that determines the maximum between this module and another module.
     ///
     /// - Parameter lhs: The module to compare against.
@@ -77,6 +80,12 @@ extension Module {
         second: @escaping ModuleBuilder<U>
     ) -> some Module {
         self.blend(control: control(), second: second())
+    }
+    public func clamp<T: Module, U: Module>(
+        lower: @escaping ModuleBuilder<T>,
+        upper: @escaping ModuleBuilder<U>
+    ) -> some Module {
+        self.clamp(lower: lower(), upper: upper())
     }
     /// Construct a module that determines the maximum between this module and another module.
     ///
