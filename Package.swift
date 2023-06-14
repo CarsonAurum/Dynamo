@@ -15,6 +15,10 @@ let package = Package(
             name: "Dynamo",
             targets: ["Dynamo"]
         ),
+        .library(
+            name: "DynNoise",
+            targets: ["DynNoise"]
+        )
     ],
     dependencies: [
         .package(url: "https://github.com/realm/SwiftLint.git", branch: "main"),
@@ -38,11 +42,20 @@ let package = Package(
 //                .product(name: "Metrics", package: "swift-metrics"),
                 .product(name: "Numerics", package: "swift-numerics")
             ],
-            path: "Sources/",
             plugins: [
                 .plugin(name: "SwiftLintPlugin", package: "SwiftLint")
             ]
         ),
-        .testTarget(name: "DynamoTests", dependencies: ["Dynamo"]),
+        .target(
+            name: "DynNoise",
+            dependencies: [
+                .target(name: "Dynamo"),
+                .product(name: "Numerics", package: "swift-numerics")
+            ],
+            plugins: [
+                .plugin(name: "SwiftLintPlugin", package: "SwiftLint")
+            ]
+        ),
+        .testTarget(name: "DynamoTests", dependencies: ["DynNoise"]),
     ]
 )
