@@ -156,7 +156,7 @@ extension ActivityView {
             internal var body: some View {
                 let height = size.height / 3.2
                 let width = height / 2
-                let angle = 2 * .pi / CGFloat(count) * CGFloat(index)
+                let angle = 2 * CGFloat.pi / CGFloat(count) * CGFloat(index)
                 let x = (size.width / 2 - height / 2) * cos(angle)
                 let y = (size.height / 2 - height / 2) * sin(angle)
                 let animation: Animation =
@@ -330,18 +330,18 @@ extension ActivityView {
                 set { p = newValue }
             }
             internal func path(in rect: CGRect) -> Path {
-                let h = p * 2
+                let h = p * 2.0
                 var len = h * maxLength
-                if h > 1 && h < lag + 1 { len = maxLength }
-                if h > lag + 1 {
-                    let coeff = 1 / (1 - lag)
-                    let n = h - 1 - lag
-                    len = (1 - n * coeff) * maxLength
+                if h > 1.0 && h < lag + 1.0 { len = maxLength }
+                if h > lag + 1.0 {
+                    let coeff: Double = 1.0 / (1.0 - lag)
+                    let n = h - 1.0 - lag
+                    len = (1.0 - n * coeff) * maxLength
                 }
-                let first = Double.pi / 2
-                let second = 4 * Double.pi - first
+                let first = Double.pi / 2.0
+                let second = 4.0 * Double.pi - first
                 var end = h * first
-                if h > 1 { end = first + (h - 1) * second }
+                if h > 1.0 { end = first + (h - 1.0) * second }
                 let start = end + len
                 var p = Path()
                 p.addArc(

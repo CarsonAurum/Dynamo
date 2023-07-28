@@ -1,6 +1,7 @@
 //
-//  Sources.swift
-//  
+//  ConstantModule.swift
+//
+//  A module emitting the same value for any coordinate.
 //
 //  Carson Rau - 6/13/23
 //

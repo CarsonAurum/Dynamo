@@ -37,6 +37,24 @@
       }
     },
     {
+      "identity" : "swift-atomics",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-atomics.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "b37e0a6e7b048a4ca2c03240387c03d193c3bb60"
+      }
+    },
+    {
+      "identity" : "swift-log",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-log.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "f8ce47d3b04c217a5aa0f3e26a632fc3fec22f4a"
+      }
+    },
+    {
       "identity" : "swift-numerics",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-numerics.git",
@@ -50,17 +68,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-syntax.git",
       "state" : {
-        "revision" : "27cd6190ce0628847a3f8050794d6e627ad79c08",
-        "version" : "509.0.0-swift-DEVELOPMENT-SNAPSHOT-2023-05-02-a"
+        "branch" : "main",
+        "revision" : "9cab487af4d58a51214213117f5c8545e64526b7"
       }
     },
     {
       "identity" : "swiftlint",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/realm/SwiftLint",
+      "location" : "https://github.com/realm/SwiftLint.git",
       "state" : {
         "branch" : "main",
-        "revision" : "23326fc433492e038a7fca316a11314d9c78b498"
+        "revision" : "b53919d40c206a4ad1ac226d47477d3a8dba87e1"
       }
     },
     {
@@ -86,8 +104,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/jpsim/Yams.git",
       "state" : {
-        "revision" : "f47ba4838c30dbd59998a4e4c87ab620ff959e8a",
-        "version" : "5.0.5"
+        "revision" : "0d9ee7ea8c4ebd4a489ad7a73d5c6cad55d6fed3",
+        "version" : "5.0.6"
       }
     }
   ],
